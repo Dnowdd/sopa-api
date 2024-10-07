@@ -1,0 +1,614 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API Template Node",
+    "description": "Essa é a documentação da API Template Node",
+    "contact": {
+      "name": "Suporte",
+      "email": "teste@genialogic.com.br"
+    },
+    "version": "1.2.0"
+  },
+  "paths": {
+    "/api/user/create": {
+      "post": {
+        "description": "Cria um novo usuário",
+        "security": [
+          {
+            "SessionId": []
+          }
+        ],
+        "tags": [
+          "User"
+        ],
+        "requestBody": {
+          "description": "Dados necessários para cadastro de um novo usuário",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestUser"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Usuário criado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseUser"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro de validação"
+          },
+          "406": {
+            "description": "As senhas não coincidem"
+          },
+          "409": {
+            "description": "Email já cadastrado"
+          },
+          "422": {
+            "description": "Preencha todos os campos"
+          },
+          "500": {
+            "description": "Erro interno ao criar usuário"
+          }
+        }
+      }
+    },
+    "/api/user/all": {
+      "get": {
+        "description": "Retorna todos os usuários cadastrados no sistema",
+        "security": [
+          {
+            "SessionId": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Página atual",
+            "type": "number"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Quantidade de registros por página",
+            "type": "number"
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": "Filtro de busca por nome ou email",
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResponseUser"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Usuários não encontrados"
+          },
+          "500": {
+            "description": "Erro ao capturar dados dos usuários"
+          }
+        }
+      }
+    },
+    "/api/user/{id}": {
+      "get": {
+        "description": "Retorna um usuário específico",
+        "security": [
+          {
+            "SessionId": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id do usuário",
+            "required": true,
+            "type": "number"
+          }
+        ],
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseUser"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Usuário não encontrado"
+          },
+          "500": {
+            "description": "Erro ao capturar dados do usuário"
+          }
+        }
+      },
+      "patch": {
+        "description": "Atualiza um usuário específico",
+        "security": [
+          {
+            "SessionId": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id do usuário",
+            "required": true
+          }
+        ],
+        "tags": [
+          "User"
+        ],
+        "requestBody": {
+          "description": "Dados necessários para atualização de um usuário",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestUpdateUser"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseUser"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Dados incompletos ou inválidos",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": {
+                    "description_empty": "Nenhuma informação válida foi passada.",
+                    "description_cannot_changed": "Não é possível atualizar esse campo"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user": {
+      "get": {
+        "description": "Retorna o usuário logado",
+        "security": [
+          {
+            "SessionId": []
+          }
+        ],
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseUser"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "description": "Realiza o login do usuário",
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "description": "Dados necessários para login do usuário",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestLogin"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseLogin"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/api/auth/password-recovery": {
+      "post": {
+        "description": "Envia um email para recuperação de senha",
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "description": "E-mail do usuário para recuperação de senha",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestRecoveryPassword"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "E-mail enviado com sucesso"
+          },
+          "400": {
+            "description": "E-mail não informado"
+          },
+          "500": {
+            "description": "Usuário não encontrado"
+          }
+        }
+      }
+    },
+    "/api/auth/reset-password/{code}": {
+      "put": {
+        "description": "Altera a senha do usuário",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "description": "Código de recuperação de senha",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "requestBody": {
+          "description": "Nova senha do usuário",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestResetPassword"
+              }
+            }
+          }
+        },
+        "tags": [
+          "Auth"
+        ],
+        "responses": {
+          "200": {
+            "description": "Senha atualizada com sucesso"
+          },
+          "400": {
+            "description": "Código de recuperação inválido",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": {
+                    "description_empty": "As senhas não podem ser vazias",
+                    "description_dont_math": "As senhas não coincidem",
+                    "description_invalid_recovery_code": "Código de recuperação inválido"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro ao resetar a senha"
+          }
+        }
+      }
+    },
+    "/api/auth/logout": {
+      "get": {
+        "description": "Realiza o logout do usuário",
+        "security": [
+          {
+            "SessionId": []
+          }
+        ],
+        "tags": [
+          "Auth"
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuário deslogado com sucesso."
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RequestUser": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Nome do usuário",
+            "exemple": "Olga"
+          },
+          "email": {
+            "type": "string",
+            "description": "Email do usuário",
+            "exemple": "ca@hi.cl"
+          },
+          "avatar": {
+            "type": "file",
+            "description": "Avatar do usuário"
+          },
+          "password": {
+            "type": "string",
+            "description": "Senha do usuário",
+            "password": "123*"
+          },
+          "repeatPassword": {
+            "type": "string",
+            "description": "Confirmação da senha do usuário",
+            "password": "123*"
+          }
+        }
+      },
+      "RequestUpdateUser": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Nome do usuário",
+            "exemple": "Olga"
+          },
+          "email": {
+            "type": "string",
+            "description": "Email do usuário",
+            "exemple": "ca@hi.cl"
+          },
+          "avatar": {
+            "type": "file",
+            "description": "Avatar do usuário"
+          },
+          "password": {
+            "type": "string",
+            "description": "Senha do usuário",
+            "password": "123*"
+          },
+          "active": {
+            "type": "boolean",
+            "description": "Usuário ativo",
+            "active": true
+          }
+        }
+      },
+      "RequestLogin": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "Email do usuário",
+            "exemple": "totlozap@jotib.az"
+          },
+          "password": {
+            "type": "string",
+            "description": "Senha do usuário",
+            "password": "123*"
+          }
+        }
+      },
+      "RequestRecoveryPassword": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "Email do usuário",
+            "exemple": "doppo@af.lt"
+          }
+        }
+      },
+      "RequestResetPassword": {
+        "type": "object",
+        "properties": {
+          "newPassword": {
+            "type": "string",
+            "description": "Nova senha do usuário",
+            "exemple": "123*"
+          },
+          "confirmNewPassword": {
+            "type": "string",
+            "description": "Confirmação da nova senha do usuário",
+            "exemple": "123*"
+          }
+        }
+      },
+      "ResponseUser": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "Id do usuário",
+            "exemple": 1
+          },
+          "name": {
+            "type": "string",
+            "description": "Nome do usuário",
+            "exemple": "Olga"
+          },
+          "email": {
+            "type": "string",
+            "description": "Email do usuário",
+            "exemple": "ca@hi.cl"
+          },
+          "avatar": {
+            "type": "file",
+            "description": "Avatar do usuário"
+          },
+          "active": {
+            "type": "boolean",
+            "description": "Usuário ativo",
+            "exemple": true
+          },
+          "verified": {
+            "type": "boolean",
+            "description": "Usuário verificado",
+            "exemple": true
+          },
+          "deleted": {
+            "type": "boolean",
+            "description": "Usuário deletado",
+            "exemple": false
+          },
+          "lastLogin": {
+            "type": "string",
+            "description": "Último login do usuário",
+            "exemple": "2021-08-25T15:00:00"
+          },
+          "lastPasswordChange": {
+            "type": "string",
+            "description": "Última alteração de senha do usuário",
+            "exemple": "2021-08-25T15:00:00"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "Data de criação do usuário",
+            "exemple": "2021-08-25T15:00:00"
+          },
+          "updatedAt": {
+            "type": "string",
+            "description": "Data de atualização do usuário",
+            "exemple": "2021-08-25T15:00:00"
+          },
+          "deletedAt": {
+            "type": "string",
+            "description": "Data de exclusão do usuário",
+            "exemple": "2021-08-25T15:00:00"
+          }
+        }
+      },
+      "ResponseLogin": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "Id do usuário",
+            "exemple": 1
+          },
+          "name": {
+            "type": "string",
+            "description": "Nome do usuário",
+            "exemple": "Olga"
+          },
+          "email": {
+            "type": "string",
+            "description": "Email do usuário",
+            "exemple": "ca@hi.cl"
+          },
+          "avatar": {
+            "type": "file",
+            "description": "Avatar do usuário"
+          },
+          "active": {
+            "type": "boolean",
+            "description": "Usuário ativo",
+            "exemple": true
+          },
+          "verified": {
+            "type": "boolean",
+            "description": "Usuário verificado",
+            "exemple": true
+          },
+          "deleted": {
+            "type": "boolean",
+            "description": "Usuário deletado",
+            "exemple": false
+          },
+          "lastLogin": {
+            "type": "string",
+            "description": "Último login do usuário",
+            "exemple": "2021-08-25T15:00:00"
+          },
+          "lastPasswordChange": {
+            "type": "string",
+            "description": "Última alteração de senha do usuário",
+            "exemple": "2021-08-25T15:00:00"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "Data de criação do usuário",
+            "exemple": "2021-08-25T15:00:00"
+          },
+          "updatedAt": {
+            "type": "string",
+            "description": "Data de atualização do usuário",
+            "exemple": "2021-08-25T15:00:00"
+          },
+          "deletedAt": {
+            "type": "string",
+            "description": "Data de exclusão do usuário",
+            "exemple": "2021-08-25T15:00:00"
+          },
+          "sessionId": {
+            "type": "string",
+            "description": "SessionId do usuário",
+            "exemple": "1234567890"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "SessionId": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization"
+      }
+    }
+  }
+}

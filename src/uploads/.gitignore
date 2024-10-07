@@ -1,0 +1,17 @@
+# Ignore all files
+*
+
+# Do not ignore .gitignore
+!.gitignore
+
+# Do not ignore index.ts at the root level
+!index.ts
+
+# Do not ignore files in the avatars directory
+!avatars/
+
+# Specifically ignore everything in avatars directory
+avatars/*
+
+# Do not ignore index.ts within the avatars directory
+!avatars/index.ts

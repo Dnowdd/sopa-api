@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>API Template - Documentation</title>
+  </head>
+  <body>
+    <body>
+      <div id="redoc-container"></div>
+      <script src="https://cdn.jsdelivr.net/npm/redoc@2.0.0-rc.55/bundles/redoc.standalone.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/gh/wll8/redoc-try@1.4.9/dist/try.js"></script>
+      <script>
+        initTry({
+          openApi: `http://localhost:3001/api/swagger-json`,
+          redocOptions: { scrollYOffset: 50 },
+        });
+      </script>
+    </body>
+  </body>
+</html>
