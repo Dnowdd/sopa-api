@@ -1,11 +1,11 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "API Template Node",
-    "description": "Essa é a documentação da API Template Node",
+    "title": "API SOPA",
+    "description": "Essa é a documentação da API DO SOPA",
     "contact": {
-      "name": "Suporte",
-      "email": "teste@genialogic.com.br"
+      "name": "sopa-suporte",
+      "email": "sopa@fatec.sp.gov.br"
     },
     "version": "1.2.0"
   },

@@ -98,9 +98,9 @@ export class AuthService implements IAuthService {
 
     // Informações da empresa
     const companyInfo = {
-      company: "Genialogic",
+      company: "SOPA",
       project: "Template Project",
-      footer: "Genialogic, Rua Joanópolis, 648<br>Cidade Jardim - Campinas/SP",
+      footer: "FATEC CAMPINAS",
     };
 
     // Importa o template de e-mail e substitui as variáveis
@@ -113,7 +113,7 @@ export class AuthService implements IAuthService {
     });
 
     const mailOptions = {
-      from: '"Genialogic" <no-reply@genialogic.com.br>',
+      from: '"SOPA " <no-reply@sopa.com.br>',
       to: email,
       subject: "Recuperação de senha",
       text: ``,
@@ -267,9 +267,9 @@ export class AuthService implements IAuthService {
 
     // Informações da empresa
     const companyInfo = {
-      company: "Genialogic",
+      company: "SOPA",
       project: "Template Project",
-      footer: "Genialogic, Rua Joanópolis, 648<br>Cidade Jardim - Campinas/SP",
+      footer: "FATEC CAMPINAS",
     };
 
     // Importa o template de e-mail e substitui as variáveis
@@ -282,7 +282,7 @@ export class AuthService implements IAuthService {
     });
 
     const mailOptions = {
-      from: '"Genialogic" <no-reply@genialogic.com.br>',
+      from: '"SOPA" <no-reply@sopa.com.br>',
       to: email,
       subject: "Atualização de senha",
       text: ``,
@@ -393,7 +393,7 @@ export class AuthService implements IAuthService {
     });
 
     const mailOptions = {
-      from: '"Genialogic" <no-reply@genialogic.com.br>',
+      from: '"Sopa" <no-reply@sopa.com.br>',
       to: email,
       subject: "Ative sua conta",
       text: ``,
